@@ -17,12 +17,20 @@ export default function Home() {
     }
   ];
 
+  const [isVisible, setIsVisible] = useState(true);
+
   const container = {
     visible: {
+      opacity: 1,
       transition: {
         staggerChildren: 0.025
       }
-      
+    },
+    hidden: {
+      opacity: 0,
+      transition: {
+        duration: 0.5
+      }
     }
   };
 
@@ -33,14 +41,14 @@ export default function Home() {
 
       initial="hidden"
       // animate="visible"
-      animate={ "visible"}
+      animate={isVisible ? "visible" : "hidden"}
       variants={container}
       exit="hidden"
       
     >
       <div className="container ">
         {placeholderText.map((item, index) => {
-          return <AnimatedText  {...item} key={index} />;
+          return <AnimatedText  {...item} key={index} onAnimationComplete={() => setIsVisible(false)}/>;
         })}
       </div>
 
